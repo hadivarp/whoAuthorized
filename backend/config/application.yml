@@ -1,0 +1,6 @@
+
+ENVIRONMENT: 'development'
+
+SECRET_KEY_BASE: "secret_key"
+CORS_ENABLE: "true"
+
