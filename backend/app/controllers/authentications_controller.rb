@@ -42,7 +42,7 @@ class AuthenticationsController < ApplicationController
 
 
   def sign_out
-    if @current_user.update(token_valid: false)
+    if @current_user.access_tokens.update(token: nil)
       render json: { message: 'User signed out successfully' }, status: :ok
     else
       render json: { error: 'Unable to sign out' }, status: :unprocessable_entity
@@ -78,7 +78,6 @@ class AuthenticationsController < ApplicationController
     begin
 
       if header.present?
-        byebug
         @decode = JsonWebToken.decode(header)
 
         @current_user = User.find(@decode['user_id'])
