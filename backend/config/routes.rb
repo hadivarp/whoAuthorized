@@ -6,5 +6,6 @@ Rails.application.routes.draw do
   post '/sign_up', to: 'authentications#sign_up'
   post '/sign_in', to: 'authentications#sign_in'
   put '/sign_out' => 'authentications#sign_out'
+  put '/forget_password' => 'authentications#forget_password'
 
 end

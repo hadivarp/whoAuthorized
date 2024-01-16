@@ -3,7 +3,7 @@ class AuthenticationsController < ApplicationController
 
   rescue_from ActiveRecord::RecordInvalid, with: :handle_invalid_record
 
-  before_action :authenticate_request, only: [:sign_out]
+  before_action :authenticate_request, only: [:sign_out,:forget_password]
 
 
   def sign_up
@@ -50,6 +50,24 @@ class AuthenticationsController < ApplicationController
   end
 
 
+  def forget_password
+    result = @current_user.update(password: user_params['password'])
+
+    if result
+      render json: {
+        message: "password updated successfully"
+      }, status: :ok
+    else
+      render json: { errors: @current_user.errors }, status: 400
+    end
+  end
+
+
+  def refresh_token
+
+  end
+
+
 
 
 
@@ -78,6 +96,7 @@ class AuthenticationsController < ApplicationController
     begin
 
       if header.present?
+        byebug
         @decode = JsonWebToken.decode(header)
 
         @current_user = User.find(@decode['user_id'])
